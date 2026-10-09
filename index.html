@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="우당탕퇴마단 — 도사와 무당이 한국 민속 요괴를 퇴치하는 모바일 액션 게임. AI Digital Art Lab.">
+<title>우당탕퇴마단</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Nanum+Brush+Script&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a talisman strip on the left of the hero, then plain stacked sections on hanji paper; one bold color (talisman yellow) */
+:root{
+  --paper:#f6f1e3; --ink:#1d1a16; --muted:#6b6255; --line:#d9cfb8;
+  --fu:#f1c933; --fu-ink:#2a2208; --cinnabar:#b8261c; --panel:#efe7d2;
+  --display:"Black Han Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --brush:"Nanum Brush Script","Gowun Dodum",cursive;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#15130f; --ink:#efe8d6; --muted:#a69c88; --line:#3a342a;
+  --fu:#e8bf2a; --fu-ink:#2a2208; --cinnabar:#e2554a; --panel:#1e1b16; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#15130f; --ink:#efe8d6; --muted:#a69c88; --line:#3a342a;
+  --fu:#e8bf2a; --fu-ink:#2a2208; --cinnabar:#e2554a; --panel:#1e1b16; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.7;margin:0}
+.wrap{max-width:68rem;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:1.25rem;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-size:1.25rem;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+nav{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:.95rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover,nav a:focus-visible{color:var(--cinnabar)}
+a:focus-visible{outline:2px solid var(--cinnabar);outline-offset:3px}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,5vw,4rem);align-items:center;padding-block:clamp(2.5rem,7vw,5rem)}
+.fu{width:clamp(110px,16vw,160px);aspect-ratio:1/3;max-width:100%;background:var(--fu);color:var(--cinnabar);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:1rem .5rem;
+  box-shadow:0 1px 0 var(--line),6px 10px 0 -2px color-mix(in srgb,var(--ink) 12%,transparent);transform:rotate(-2.5deg)}
+.fu .seal{width:2.6rem;height:2.6rem;border:3px solid var(--cinnabar);display:grid;place-items:center;font-family:var(--display);font-size:1rem}
+.fu .v{writing-mode:vertical-rl;font-family:var(--brush);font-size:clamp(2.2rem,4.4vw,3.2rem);line-height:1;letter-spacing:.05em}
+.fu .w{font-family:var(--mono);font-size:.6rem;color:var(--fu-ink);letter-spacing:.2em}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cinnabar);margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.08;margin:.4rem 0 1rem;text-wrap:balance}
+.lede{max-width:36rem;font-size:1.15rem;margin:0}
+.lede-en{max-width:36rem;color:var(--muted);margin:.75rem 0 0;font-size:1rem}
+.status{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;font-family:var(--mono);font-size:.8rem;
+  border:1px solid var(--line);padding:.35rem .75rem;border-radius:999px;color:var(--muted)}
+.status i{width:.55rem;height:.55rem;border-radius:50%;background:var(--cinnabar);display:block}
+section{padding-block:clamp(2.5rem,6vw,4rem);border-top:1px solid var(--line)}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(1.7rem,3.6vw,2.3rem);margin:0 0 1.5rem;text-wrap:balance}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1.5rem}
+.char{background:var(--panel);padding:1.5rem;border-top:4px solid var(--cinnabar);min-width:0}
+.char h3{font-family:var(--display);font-weight:400;font-size:1.5rem;margin:0 0 .25rem}
+.char .tag{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--muted);margin:0 0 .75rem}
+.char p{margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:0;border:1px solid var(--line)}
+.facts div{padding:1.1rem 1.25rem;border:1px solid var(--line);margin:-1px 0 0 -1px;min-width:0}
+.facts dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:.25rem 0 0;font-size:1.05rem}
+.prose{max-width:40rem}
+.prose p{margin:0 0 1rem}
+.en{color:var(--muted)}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:1.5rem}
+.team div{min-width:0}
+.team h3{font-family:var(--display);font-weight:400;font-size:1.3rem;margin:0}
+.team p{margin:.25rem 0 0;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:baseline}
+.mail{font-family:var(--mono);font-size:clamp(1rem,2.6vw,1.35rem);color:var(--ink);text-decoration:none;border-bottom:2px solid var(--fu);user-select:all}
+footer{border-top:1px solid var(--line);padding-block:1.5rem 2.5rem;color:var(--muted);font-size:.85rem}
+footer p{margin:.2rem 0}
+.num{font-variant-numeric:tabular-nums}
+@media (max-width:560px){.hero{grid-template-columns:1fr}.fu{width:96px;justify-self:start}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="#">우당탕퇴마단</a>
+  <nav aria-label="페이지 메뉴"><a href="#game">게임</a><a href="#studio">스튜디오</a><a href="#contact">연락처</a></nav>
+</header>
+
+<div class="hero">
+  <div class="fu" aria-hidden="true">
+    <span class="seal">勅</span>
+    <span class="v">우당탕 퇴마단</span>
+    <span class="w">UDANGTANG</span>
+  </div>
+  <div>
+    <p class="eyebrow">Mobile action game · In development</p>
+    <h1>부적 한 장, 굿 한 판.<br>요괴는 우당탕 물러가라.</h1>
+    <p class="lede">우당탕퇴마단은 도사와 무당이 한국 민속 속 요괴를 퇴치하는 모바일 액션 게임입니다.</p>
+    <p class="lede-en">Udangtang Exorcists is a mobile action game where a Taoist mage and a shaman clear out monsters from Korean folklore, one stage at a time.</p>
+    <span class="status"><i></i>개발 중 · 2026</span>
+  </div>
+</div>
+
+<section id="game">
+  <h2>두 명의 퇴마사</h2>
+  <div class="cols">
+    <article class="char">
+      <h3>도사</h3>
+      <p class="tag">TAOIST · 부적술</p>
+      <p>부적을 던져 요괴를 묶고 태웁니다. 멀리서 정확하게 싸우는 퇴마사입니다.</p>
+      <p class="en">Throws paper talismans to bind and burn spirits from range.</p>
+    </article>
+    <article class="char">
+      <h3>무당</h3>
+      <p class="tag">SHAMAN · 굿과 방울</p>
+      <p>방울과 굿으로 신을 불러 가까이 모인 요괴를 한꺼번에 몰아냅니다.</p>
+      <p class="en">Calls on spirits with bells and ritual to drive back crowds up close.</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>게임 정보</h2>
+  <dl class="facts">
+    <div><dt>장르</dt><dd>모바일 액션 · 스테이지형</dd></div>
+    <div><dt>스테이지</dt><dd class="num">1차 출시 5개 스테이지</dd></div>
+    <div><dt>재화</dt><dd>보옥(寶玉)</dd></div>
+    <div><dt>엔진</dt><dd>Unity</dd></div>
+  </dl>
+</section>
+
+<section id="studio">
+  <h2>AI로 만드는 2인 스튜디오</h2>
+  <div class="prose">
+    <p>에이아이디지털아트연구소(AI Digital Art Lab)는 디자이너 강대건이 2025년에 세운 시각 디자인 스튜디오입니다. 우당탕퇴마단은 스튜디오의 첫 게임으로, 동생 양재성과 둘이서 만들고 있습니다.</p>
+    <p>코드와 게임 로직, 버그 수정은 Claude와 함께 작업하고, 스프라이트와 UI 디자인은 AI 디자인 도구와 함께 만듭니다. 작은 팀이 AI 에이전트와 함께 게임 하나를 끝까지 만드는 과정을 직접 보여주는 것이 목표입니다.</p>
+    <p class="en">AI Digital Art Lab is a visual design studio founded in 2025 by designer Daigune Kang. Udangtang Exorcists is its first game, built by a two-person team working with Claude for code and gameplay and with AI design tools for sprites and UI.</p>
+  </div>
+  <div class="team" style="margin-top:1.75rem">
+    <div><h3>강대건</h3><p>대표 · 디자인 · 기획</p></div>
+    <div><h3>양재성</h3><p>공동 개발 · 기획</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>연락처</h2>
+  <div class="contact">
+    <a class="mail" href="mailto:daegun@udangtang.com">daegun@udangtang.com</a>
+    <span class="en">제휴 · 퍼블리싱 · 문의 환영합니다.</span>
+  </div>
+</section>
+
+<footer>
+  <p>에이아이디지털아트연구소 (AI Digital Art Lab) · 대표 강대건</p>
+  <p class="num">사업자등록번호 630-33-01453</p>
+  <p class="num">© 2026 AI Digital Art Lab</p>
+</footer>
+</div>
+</body>
+</html>
